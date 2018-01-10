@@ -5,9 +5,7 @@
 # Licensed under the GNU LGPL v2.1 - http://www.gnu.org/licenses/lgpl.html
 
 
-"""
-Corpus in GibbsLda++ format of List-Of-Words.
-"""
+"""Corpus in GibbsLda++ format of List-Of-Words."""
 
 from __future__ import with_statement
 
@@ -27,9 +25,10 @@ def split_on_space(s):
 
 
 class LowCorpus(IndexedCorpus):
-    """
-    List_Of_Words corpus handles input in GibbsLda++ format.
+    """List_Of_Words corpus handles input in GibbsLda++ format.
 
+    Notes
+    -----
     Quoting http://gibbslda.sourceforge.net/#3.2_Input_Data_Format::
 
         Both data for training/estimating the model and new data (i.e., previously
@@ -49,18 +48,21 @@ class LowCorpus(IndexedCorpus):
 
         in which all [wordij] (i=1..M, j=1..Ni) are text strings and they are separated
         by the blank character.
+
     """
     def __init__(self, fname, id2word=None, line2words=split_on_space):
-        """
-        Initialize the corpus from a file.
+        """Initialize the corpus from a file.
 
-        `id2word` and `line2words` are optional parameters.
-        If provided, `id2word` is a dictionary mapping between word_ids (integers)
-        and words (strings). If not provided, the mapping is constructed from
-        the documents.
+        Parameters
+        ----------
+        fname : str
+            File name.
+        id2word : str
+            If provided, it is a dictionary mapping between word_ids (integers) and words (strings).
+            Otherwise, the mapping is constructed from the documents.
+        line2words : str
+            Function which converts lines into tokens. Defaults to simple splitting on spaces.
 
-        `line2words` is a function which converts lines into tokens. Defaults to
-        simple splitting on spaces.
         """
         IndexedCorpus.__init__(self, fname)
         logger.info("loading corpus from %s", fname)
