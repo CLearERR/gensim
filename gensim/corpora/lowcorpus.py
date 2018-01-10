@@ -106,6 +106,19 @@ class LowCorpus(IndexedCorpus):
         return self.num_docs
 
     def line2doc(self, line):
+        """Turn line into document.
+
+        Parameters
+        ----------
+        line : str
+            Line from input file.
+
+        Return
+        ------
+        list of tuples
+            Construct a list of (word, wordFrequency) 2-tuples.
+
+        """
         words = self.line2words(line)
 
         if self.use_wordids:
@@ -134,8 +147,7 @@ class LowCorpus(IndexedCorpus):
         return doc
 
     def __iter__(self):
-        """
-        Iterate over the corpus, returning one bag-of-words vector at a time.
+        """Iterate over the corpus, returning one bag-of-words vector at a time.
         """
         with utils.smart_open(self.fname) as fin:
             for lineno, line in enumerate(fin):
@@ -144,11 +156,13 @@ class LowCorpus(IndexedCorpus):
 
     @staticmethod
     def save_corpus(fname, corpus, id2word=None, metadata=False):
-        """
-        Save a corpus in the List-of-words format.
+        """Save a corpus in the List-of-words format.
 
+        Notes
+        -----
         This function is automatically called by `LowCorpus.serialize`; don't
         call it directly, call `serialize` instead.
+
         """
         if id2word is None:
             logger.info("no word id mapping provided; initializing from corpus")
@@ -176,8 +190,7 @@ class LowCorpus(IndexedCorpus):
         return offsets
 
     def docbyoffset(self, offset):
-        """
-        Return the document stored at file position `offset`.
+        """Return the document stored at file position `offset`.
         """
         with utils.smart_open(self.fname) as f:
             f.seek(offset)
